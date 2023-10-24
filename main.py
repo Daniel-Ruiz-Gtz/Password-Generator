@@ -2,37 +2,31 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
-# Function to update the text widget
 def update_password_text():
     central_word = cword_entry.get()
-    # You can generate the password and set it to passw_res_text here
     password = generate_password(central_word)
     passw_res_text.delete("1.0", "end")
     passw_res_text.insert("1.0", password)
     
-    # Show the password label and text widget
     passw_label.pack(side="left")
     passw_res_text.pack(side="left")
-    countdown(20)  # Start a 30-second countdown
+    countdown(20)
 
-# Replace this with your actual password generation logic
 def generate_password(central_word):
-    # Example password generation logic
+    # LOGIC
     return central_word + "123"
 
-# Function to hide password label and text
 def hide_password():
     passw_label.pack_forget()
     passw_res_text.pack_forget()
     time_label.pack_forget()
 
-# Function to update the countdown and hide password after 30 seconds
 def countdown(time_left):
     if time_left <= 0:
         hide_password()
     else:
         time_str.set(f"Available for {time_left} seconds")
-        time_label.pack(side="left")  # Show the countdown label
+        time_label.pack(side="left")
         root.after(1000, countdown, time_left - 1)
 
 # MAIN WINDOW
