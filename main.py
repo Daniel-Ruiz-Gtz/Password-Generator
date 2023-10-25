@@ -1,33 +1,45 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
+from tkinter import messagebox
 
+# Function to update the text widget
 def update_password_text():
     central_word = cword_entry.get()
+    # You can generate the password and set it to passw_res_text here
     password = generate_password(central_word)
     passw_res_text.delete("1.0", "end")
     passw_res_text.insert("1.0", password)
     
+    # Show the password label and text widget
     passw_label.pack(side="left")
     passw_res_text.pack(side="left")
-    countdown(20)
+    countdown(30)  # Start a 30-second countdown
 
+# Replace this with your actual password generation logic
 def generate_password(central_word):
-    # LOGIC
+    # Example password generation logic
     return central_word + "123"
 
+# Function to hide password label and text
 def hide_password():
     passw_label.pack_forget()
     passw_res_text.pack_forget()
     time_label.pack_forget()
 
+# Function to update the countdown and hide password after 30 seconds
 def countdown(time_left):
     if time_left <= 0:
         hide_password()
     else:
-        time_str.set(f"Available for {time_left} seconds")
-        time_label.pack(side="left")
+        time_str.set(f"Password available for {time_left} seconds")
+        time_label.pack(side="left")  # Show the countdown label
         root.after(1000, countdown, time_left - 1)
+
+# Function to show program information
+def show_program_info():
+    info_text = "This is a password generator program.\n\nYou can enter a central word, and the program will generate a secure password for you. The password will be available for 30 seconds."
+    messagebox.showinfo("Password Generator", info_text)
 
 # MAIN WINDOW
 root = tk.Tk()
@@ -70,11 +82,16 @@ blank_label.pack(side="top")
 generate_button = ttk.Button(root, text="Generate Password", command=update_password_text)
 generate_button.pack(side="top")
 
+time_str = tk.StringVar()
+time_label = ttk.Label(root, textvariable=time_str, background='#23283b', font=("Helvetica", 12), foreground="white")
+
 # ANSWER 
 passw_label = ttk.Label(root, text="Secure Password: ", background='#23283b', font=("Helvetica", 13), foreground="white")
 passw_res_text = tk.Text(root, height=1, width=20, font=("Helvetica", 13), background='#23283b', foreground="white")
 
-time_str = tk.StringVar()
-time_label = ttk.Label(root, textvariable=time_str, background='#23283b', font=("Helvetica", 12), foreground="white")
+# Create a small "?" button for program info
+info_button = ttk.Button(root, text="?", command=show_program_info, width=1)
+info_button.configure(style="Info.TButton")  # Create a custom style to make the button small
+info_button.pack(side="bottom")
 
 root.mainloop()
