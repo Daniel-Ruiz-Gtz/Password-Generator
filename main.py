@@ -1,28 +1,41 @@
 import random
-import string
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
 
+adjectives = [
+    "Be@utiful", "Br!ght", "Col$rful", "Cozy", "Del!ghtful",
+    "Eleg@nt", "Fragrant", "Gle@m!ng", "H@rm$n!ous", "Majest!c",
+    "Pe@ceful", "R@d!ant", "Serene", "Sp@rkl!ng", "Tr@nqu!l",
+    "V!brant", "Wh!ms!cal", "Wond#rful", "Zesty", "Allur!ng"
+]
+
+objects = [
+    "Beach", "C@stle", "Forest", "G@rden", "L!ghthouse",
+    "Me@dow", "Ocean", "P@lace", "R!ver", "Sunset",
+    "W@terfall", "Cab!n", "Mount@!n", "C!tyscape", "L@kes!de",
+    "Skyl!ne", "Island", "Countrys!de", "Park", "Mansion"
+]
+
+# Create a variable to hold the countdown timer ID
+countdown_timer_id = None
+
 def update_password_text():
-    try:
-        password_length = int(size_entry.get())
-        if password_length <= 0:
-            messagebox.showerror("Error", "Please enter a valid password length (greater than 0).")
-        else:
-            password = generate_password(password_length)
-            passw_res_text.delete("1.0", "end")
-            passw_res_text.insert("1.0", password)
-            passw_label.pack(side="left")
-            passw_res_text.pack(side="left")
-            countdown(15)  # Start the countdown timer with 30 seconds
-    except ValueError:
-        messagebox.showerror("Error", "Please enter a valid numeric password length.")
+    global countdown_timer_id
+    if countdown_timer_id is not None:
+        root.after_cancel(countdown_timer_id)
+    password = generate_password()
+    passw_res_text.delete("1.0", "end")
+    passw_res_text.insert("1.0", password)
+    passw_label.pack(side="left")
+    passw_res_text.pack(side="left")
+    countdown_timer_id = countdown(15)
 
-def generate_password(password_length):
-
-    return password_length
+def generate_password():
+    password = ""
+    password += random.choice(adjectives) + random.choice(objects) + str(random.randint(1000, 3000))
+    return password
 
 def hide_password():
     passw_label.pack_forget()
@@ -33,12 +46,13 @@ def countdown(time_left):
     if time_left <= 0:
         hide_password()
     else:
-        time_str.set(f"Password available for {time_left} seconds")
+        time_str.set(f"  Available for {time_left} seconds")
         time_label.pack(side="left")
-        root.after(1000, countdown, time_left - 1)
+        global countdown_timer_id
+        countdown_timer_id = root.after(1000, countdown, time_left - 1)
 
 def show_program_info():
-    info_text = "This is a password generator program.\n\nJust enter the length of the password, and the program will generate a secure password for you. The password will be available for 30 seconds."
+    info_text = "This is a password generator program.\n\nJust click the button, and the program will generate a secure password for you. The password will be available for 15 seconds."
     messagebox.showinfo("Password Generator", info_text)
 
 # MAIN WINDOW
@@ -68,16 +82,6 @@ title_label.pack(side="top")
 blank_label = ttk.Label(root, background='#23283b')
 blank_label.pack(side="top")
 
-# PASSWORD LENGTH ENTRY
-size_label = ttk.Label(root, text="Password Length", background='#23283b', font=("Helvetica", 13), foreground="white")
-size_label.pack(side="top")
-size_entry = ttk.Entry(root, font=("Helvetica", 11))
-size_entry.pack(side="top")
-
-# BLANK SPACE
-blank_label = ttk.Label(root, background='#23283b')
-blank_label.pack(side="top")
-
 # GENERATE BUTTON
 generate_button = ttk.Button(root, text="Generate Password", command=update_password_text)
 generate_button.pack(side="top")
@@ -87,7 +91,7 @@ time_label = ttk.Label(root, textvariable=time_str, background='#23283b', font=(
 
 # ANSWER
 passw_label = ttk.Label(root, text="Secure Password: ", background='#23283b', font=("Helvetica", 13), foreground="white")
-passw_res_text = tk.Text(root, height=1, width=20, font=("Helvetica", 13), background='#23283b', foreground="white")
+passw_res_text = tk.Text(root, height=1, width=25, font=("Helvetica", 13), background='#23283b', foreground="white")
 
 # INFO BUTTON
 info_button = ttk.Button(root, text="?", command=show_program_info, width=1)
