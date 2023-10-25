@@ -18,9 +18,9 @@ This is a simple Python program that generates secure passwords using a combinat
 
 ## Screenshots
 
-![Password Generator]([screenshots\Screenshot01.png](https://github.com/Daniel-Ruiz-Gtz/password-generator/blob/master/screenshots/Screenshot01.png))
-![Password Generator]([screenshots\Screenshot02.png](https://github.com/Daniel-Ruiz-Gtz/password-generator/blob/master/screenshots/Screenshot02.png))
-![Password Generator]([screenshots\Screenshot03.png](https://github.com/Daniel-Ruiz-Gtz/password-generator/blob/master/screenshots/Screenshot03.png))
+![Password Generator](https://github.com/Daniel-Ruiz-Gtz/password-generator/blob/master/screenshots/Screenshot01.png)
+![Password Generator](https://github.com/Daniel-Ruiz-Gtz/password-generator/blob/master/screenshots/Screenshot02.png)
+![Password Generator](https://github.com/Daniel-Ruiz-Gtz/password-generator/blob/master/screenshots/Screenshot03.png)
 
 ## Requirements
 
